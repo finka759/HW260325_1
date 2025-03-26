@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>main.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW260325_1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">main.kt</span></div><h1>main.kt</h1><pre class="source lang-java linenums">fun main() {
+<span class="nc" id="L2">    val limitDay: Int = 150_000</span>
+<span class="nc" id="L3">    val limitMonth: Int = 600_000</span>
+<span class="nc" id="L4">    val curentAmount: Int = 4801</span>
+<span class="nc" id="L5">    val prevAmountsInDay: Int = 15_000</span>
+<span class="nc" id="L6">    val prevAmountsInMounth: Int = 60_000</span>
+<span class="nc" id="L7">    val cardsType: String = &quot;Visa&quot; //&quot;Visa&quot; &quot;Мир&quot;</span>
+
+<span class="nc" id="L9">    println(</span>
+<span class="nc" id="L10">        makeTransfer(</span>
+<span class="nc" id="L11">            limitDay,</span>
+<span class="nc" id="L12">            limitMonth,</span>
+<span class="nc" id="L13">            curentAmount,</span>
+<span class="nc" id="L14">            prevAmountsInDay,</span>
+<span class="nc" id="L15">            prevAmountsInMounth,</span>
+<span class="nc" id="L16">            cardsType</span>
+        )
+    )
+<span class="nc" id="L19">}</span>
+
+fun makeTransfer(
+    limitDay: Int,
+    limitMonth: Int,
+    curentAmount: Int,
+    prevAmountsInDay: Int,
+    prevAmountsInMounth: Int,
+    cardsType: String
+): String {
+<span class="fc bfc" id="L29" title="All 4 branches covered.">    if ((curentAmount + prevAmountsInDay) &lt;= limitDay &amp;&amp; (curentAmount + prevAmountsInMounth) &lt;= limitMonth) {</span>
+<span class="fc" id="L30">        val realTax = getTax(cardsType, prevAmountsInMounth, curentAmount)</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (realTax &gt;= 0) {</span>
+<span class="fc" id="L32">            return &quot;Комиссия составит: $realTax&quot;</span>
+        } else {
+<span class="fc" id="L34">            return &quot;Ошибка данных. Операция отклонена!&quot;</span>
+        }
+    } else {
+<span class="fc" id="L37">        return &quot;Превышены лимиты. Операция отклонена!&quot;</span>
+    }
+}
+
+<span class="fc" id="L41">fun getTaxMastercard(prevAmountsInMounth: Int = 0, curentAmount: Int): Int {</span>
+<span class="fc" id="L42">    val exemption = 75_000</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    return if (curentAmount + prevAmountsInMounth &lt;= exemption) {</span>
+<span class="fc" id="L44">        0</span>
+<span class="fc" id="L45">    } else ((curentAmount + prevAmountsInMounth - exemption) * 0.006 + 20).toInt()</span>
+}
+
+fun getTaxVisa(curentAmount: Int): Int {
+<span class="fc" id="L49">    val tax: Float = 0.0075F</span>
+<span class="fc" id="L50">    val minTax: Int = 35</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    return if ((curentAmount * tax) &gt; 35) {</span>
+<span class="fc" id="L52">        curentAmount * tax</span>
+    } else {
+<span class="fc" id="L54">        minTax</span>
+<span class="fc" id="L55">    }.toInt()</span>
+}
+
+fun getTaxMir(): Int {
+<span class="fc" id="L59">    return 0</span>
+}
+
+<span class="fc" id="L62">fun getTax(</span>
+<span class="fc" id="L63">    cardsType: String = &quot;Мир&quot;,</span>
+<span class="fc" id="L64">    prevAmountsInMounth: Int = 0,</span>
+    curentAmount: Int
+<span class="pc bpc" id="L66" title="3 of 10 branches missed.">) = when (cardsType) {</span>
+<span class="fc" id="L67">    &quot;Mastercard&quot; -&gt; getTaxMastercard(prevAmountsInMounth, curentAmount)</span>
+<span class="fc" id="L68">    &quot;Visa&quot; -&gt; getTaxVisa(curentAmount)</span>
+<span class="fc" id="L69">    &quot;Мир&quot; -&gt; getTaxMir()</span>
+    else -&gt; {
+<span class="fc" id="L71">        -1</span>
+    }
+<span class="fc" id="L73">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
