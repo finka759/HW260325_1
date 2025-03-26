@@ -160,7 +160,7 @@ class MainKtTest {
         val curentAmount: Int = 1000
         val prevAmountsInDay: Int = 15_000
         val prevAmountsInMounth: Int = 60_000
-        val cardsType: String = "Vis" //"Visa" "Мир"
+        val cardsType: String = "Visa" //"Visa" "Мир"
 
         val result = makeTransfer(
             limitDay,
